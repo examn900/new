@@ -1823,52 +1823,72 @@ if (editRow) {
                 <div key={col}>
                   <label className="block text-sm font-medium text-gray-700 mb-1">{col}</label>
                   {col === 'Attachment' && row[col] ? (
-                    <a
-                      href={row[col]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-600"
-                    >
-                      View Attachment
-                    </a>
+                    <div className="space-y-2">
+                      {row[col].match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
+                        <img 
+                          src={row[col]} 
+                          alt="Transaction Attachment" 
+                          className="max-w-full h-auto rounded-lg border border-gray-200" 
+                        />
+                      ) : row[col].match(/\.(pdf)$/i) ? (
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">PDF Document</p>
+                              <p className="text-xs text-gray-500">Click to view in new tab</p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              </svg>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">Document</p>
+                              <p className="text-xs text-gray-500">Click to view in new tab</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      <a
+                        href={row[col]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-600 font-medium text-sm"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Open in New Tab
+                      </a>
+                    </div>
                   ) : (
                     <p className="text-gray-900">{row[col] || '-'}</p>
                   )}
                 </div>
               ))}
             </div>
-            <div className="p-4 bg-gray-50 rounded-b-xl mt-6 border-t border-gray-200 flex justify-between items-center">
-          <div>
-            {/* ✅ ADD THIS BUTTON */}
-            {row.Attachment && (
-              <a
-                href={row.Attachment}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium flex items-center gap-2 transition-colors"
+            <div className="p-6 border-t border-gray-200 flex justify-end">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
               >
-                {/* Optional: Paperclip Icon */}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.414a4 4 0 00-5.656-5.656l-6.415 6.415a6 6 0 108.484 8.484L18.364 13" />
-                </svg>
-                View Attachment
-              </a>
-            )}
+                Close
+              </button>
+            </div>
           </div>
-          
-          {/* This is the existing Close button */}
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-medium"
-          >
-            Close
-          </button>
         </div>
-
-      </div>
-    </div>
-  );
-}
+      );
+    }
 
     function TransactionModal({ row, chartOfAccounts, uploading, onClose, onSave }) {
       const [formData, setFormData] = useState(row || {
