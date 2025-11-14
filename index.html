@@ -1837,18 +1837,38 @@ if (editRow) {
                 </div>
               ))}
             </div>
-            <div className="p-6 border-t border-gray-200 flex justify-end">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+            <div className="p-4 bg-gray-50 rounded-b-xl mt-6 border-t border-gray-200 flex justify-between items-center">
+          <div>
+            {/* ✅ ADD THIS BUTTON */}
+            {row.Attachment && (
+              <a
+                href={row.Attachment}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium flex items-center gap-2 transition-colors"
               >
-                Close
-              </button>
-            </div>
+                {/* Optional: Paperclip Icon */}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.414a4 4 0 00-5.656-5.656l-6.415 6.415a6 6 0 108.484 8.484L18.364 13" />
+                </svg>
+                View Attachment
+              </a>
+            )}
           </div>
+          
+          {/* This is the existing Close button */}
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-medium"
+          >
+            Close
+          </button>
         </div>
-      );
-    }
+
+      </div>
+    </div>
+  );
+}
 
     function TransactionModal({ row, chartOfAccounts, uploading, onClose, onSave }) {
       const [formData, setFormData] = useState(row || {
